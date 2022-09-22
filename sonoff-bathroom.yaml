@@ -1,0 +1,53 @@
+esphome:
+  name: sonoff-bathroom
+
+esp8266:
+  board: sonoff_th
+
+# Enable logging
+logger:
+
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  password: ""
+
+wifi:
+  ssid: "'-'@_"
+  password: "Dervenkovi"
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Button"
+    on_press:
+      - switch.toggle: relay
+
+switch:
+  - platform: gpio
+    name: "Relay"
+    pin: GPIO12
+    id: relay
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: no
+    
+sensor:
+  platform: dht
+  pin: 
+    number: 14
+    mode: INPUT_PULLUP
+  model: AM2302
+  temperature:
+     name: "Temp"
+  humidity:
+     name: "Humidity"
+  update_interval: 10s
